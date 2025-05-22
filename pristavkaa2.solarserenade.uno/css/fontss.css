@@ -1,0 +1,17 @@
+@font-face {
+ font-family: 'Acrom';
+ src: url("") format('woff2'),
+ url("") format('woff'),
+ url("") format('truetype');
+ font-weight: 700;
+ font-style: normal;
+}
+
+@font-face {
+ font-family: 'Acrom';
+ src: url("") format('woff2'),
+ url("") format('woff'),
+ url("") format('truetype');
+ font-weight: 800;
+ font-style: normal;
+}
