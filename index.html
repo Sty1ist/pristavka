@@ -1567,10 +1567,19 @@ background: url("") 0 0 no-repeat;
             
  <div style="text-align: center; margin: 10px auto; display: block; font-size: 24px; line-height: 26px;"><strong>Залишіть заявку</strong><p>та отримайте консультацію</p></div>
  
-<form id="order6" class="order_form" name="order-form" action="https://pristavkaa2.solarserenade.uno/thankyou.php" method="post" onsubmit="if(this.name.value==''){alert('Введіть Ваше імя!');return false}if(this.phone.value==''){alert('Введіть Ваш номер телефону!');return false}return true;">
+<!-- <form id="order6" class="order_form" name="order-form" action="https://pristavkaa2.solarserenade.uno/thankyou.php" method="post" onsubmit="if(this.name.value==''){alert('Введіть Ваше імя!');return false}if(this.phone.value==''){alert('Введіть Ваш номер телефону!');return false}return true;">
  
     <input class="field" type="text" name="name" placeholder="Введіть Ваше ім'я" required="" value="">
     <input class="field" type="tel" name="phone" placeholder="Введіть Ваш телефон" required="" value="">
+ 
+    <button type="submit" class="button">Замовити зараз</button>
+    <div class="products_count">* Залишилось <b>17</b> шт по знижці</div>
+</form> -->
+
+<form id="order6" class="order_form" name="order-form" action="https://pristavkaa2.solarserenade.uno/thankyou.php" method="post" onsubmit="return sendFormToTelegram(event)">
+ 
+    <input class="field" type="text" name="name" placeholder="Введіть Ваше ім'я" required>
+    <input class="field" type="tel" name="phone" placeholder="Введіть Ваш телефон" required>
  
     <button type="submit" class="button">Замовити зараз</button>
     <div class="products_count">* Залишилось <b>17</b> шт по знижці</div>
@@ -1595,6 +1604,41 @@ background: url("") 0 0 no-repeat;
             </div></div>
 </footer>
 </section>
+
+<script>
+    // const TOKEN = 'ТВОЙ_ТОКЕН_БОТА';
+    // const CHAT_ID = 'ТВОЙ_CHAT_ID';
+
+    const TOKEN = '8006157118:AAGmy4ILz_9EmhnE5GNi2_1Mxx9tSdxSq-U';
+    const CHAT_ID = '8071534300'
+
+    async function sendFormToTelegram(event) {
+        event.preventDefault(); // Зупиняємо стандартну відправку
+
+        const form = event.target;
+        const name = form.name.value.trim();
+        const phone = form.phone.value.trim();
+
+        if (!name || !phone) {
+            alert('Будь ласка, заповніть усі поля!');
+            return false;
+        }
+
+        const message = `📥 Нова заявка\n👤 Ім'я: ${name}\n📞 Телефон: ${phone}`;
+
+        await fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                chat_id: CHAT_ID,
+                text: message
+            })
+        });
+
+        // Після надсилання в Telegram — відправка на сервер
+        form.submit();
+    }
+</script>
 
 
 
